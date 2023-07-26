@@ -46,16 +46,20 @@ export default class ItemDetails extends Component {
       .then((item) => {
         this.setState({
           item,
-          image: getImageUrl(item),
-          // image: 'https://www.shutterstock.com/image-vector/no-image-available-vector-illustration-600w-744886198.jpg',
+          image: getImageUrl(item)
         });
       });
   }
 
+	onError() {
+		this.setState({
+			image: "/static/media/image_not_available.c50a9db2.jpg"
+		})
+	}
+
   render() {
 
     const { item, image } = this.state;
-		console.log(image);
     if (!item) {
       return <span>Select a item from a list</span>;
     }
@@ -66,7 +70,9 @@ export default class ItemDetails extends Component {
       <div className="item-details card">
         <img className="item-image"
           src={image}
-          alt="item"/>
+					onError={this.onError.bind(this)}
+          alt="item"
+				/>
 
         <div className="card-body">
           <h4>{name}</h4>
